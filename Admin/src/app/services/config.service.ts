@@ -17,7 +17,7 @@ export class ConfigService {
     else{
       configFile = '/app/assets/configs/appConfig.json'
     }
-    return this.http.get('../assets/configs/appConfig.json')
+    return this.http.get(configFile)
   }
 
   set(key: string) {
