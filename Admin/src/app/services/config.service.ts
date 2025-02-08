@@ -11,6 +11,12 @@ export class ConfigService {
 
   loadConfig() {
     let configFile;
+    if(window.location.href.includes("localhost")){
+      configFile = '/assets/configs/appConfig.json'
+    }
+    else{
+      configFile = '/app/assets/configs/appConfig.json'
+    }
     return this.http.get('../assets/configs/appConfig.json')
   }
 
