@@ -1,0 +1,6 @@
+{
+    "PORT": 80,
+    "ApiServer": {
+        "PORT": 3000
+    }
+}
