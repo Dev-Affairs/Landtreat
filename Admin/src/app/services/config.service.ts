@@ -10,13 +10,13 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
   loadConfig() {
-    let configFile;
-    if(window.location.href.includes("localhost")){
-      configFile = '/assets/configs/appConfig.json'
-    }
-    else{
-      configFile = '/app/assets/configs/appConfig.json'
-    }
+    let configFile = "/app/assets/configs/appConfig.json";
+    // if(window.location.href.includes("localhost")){
+    //   configFile = '/assets/configs/appConfig.json'
+    // }
+    // else{
+    //   configFile = '/app/assets/configs/appConfig.json'
+    // }
     return this.http.get(configFile)
   }
 
