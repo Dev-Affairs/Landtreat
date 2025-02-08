@@ -10,7 +10,8 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
   loadConfig() {
-    return this.http.get('/app/assets/configs/appConfig.json')
+    let configFile;
+    return this.http.get('../assets/configs/appConfig.json')
   }
 
   set(key: string) {
