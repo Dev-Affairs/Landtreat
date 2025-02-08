@@ -155,10 +155,14 @@
         align-items: center;
         justify-content: center;
         font-size: 1.2rem;
-        transform: scale(0.3);
+        width: 25px;
+        height: 25px;
+        // transform: scale(0.3);
         opacity: 0;
         // visibility: hidden;
         overflow: hidden;
+        font-size: small;
+        transition: all ease .4s;
         // position: relative;
       }
     
@@ -186,10 +190,10 @@
     }
     
     /* Show button on hover */
-    // .img-preview:hover button {
-    //   opacity: 1;
-    //   visibility: visible;
-    // }
+    .img-preview:hover button {
+      opacity: 1;
+      visibility: visible;
+    }
     
   }
 

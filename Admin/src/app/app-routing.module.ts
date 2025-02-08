@@ -32,6 +32,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: "editProperty",
+    component: PerpertyRegisterComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: "savedLists",
     component: SavedListsComponent,
     canActivate: [AuthGuard]

@@ -256,6 +256,7 @@ module.exports.updateProperty = async (req, res) => {
   try {
       const updateData = req.body.updateData;
       const propertyId = req.body.propertyId
+      const slug = req.body.slug
       const patchFormConfig = req.body.patchFormConfig
 
       console.log("propertyId---------------", patchFormConfig)

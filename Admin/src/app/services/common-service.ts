@@ -108,6 +108,7 @@ this.userProfileMenuState2.next(value)
 
     return this.http.post(this.configService.get("API_BASE_URL") + 'api/update-property', {
       "propertyId": propertyId,
+      "slug": slug,
       updateData,
       patchFormConfig
     }, {

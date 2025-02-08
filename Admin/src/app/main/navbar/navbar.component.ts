@@ -3,6 +3,7 @@ import { faEye, faChartPie, faGear, faSliders, faUserPen, faSquareRss, faHouse, 
 import { AuthService } from '../../services/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,8 @@ export class NavbarComponent implements OnInit{
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    public configService: ConfigService
   ){
 
   }
@@ -41,6 +43,6 @@ onAdmin(){
 }
 
 onClickNavLogo(){
-  window.open("http://landtreat.com", "_self")
+  window.open(this.configService.get("Main_Site_Url") , "_self")
 }
 }

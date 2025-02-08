@@ -4,11 +4,12 @@ import YouTubePlayer from '@/app/components/Elements/YouTubePlayer/YouTubePlayer
 import PropertyImages from '@/app/components/Elements/PropertyImages/PropertyImages';
 import { findProperties } from '@/app/services/commonService';
 import type { Metadata } from 'next';
+import PropertyActionButton from '@/app/components/Elements/PropertyActionButton/PropertyActionButton';
 
 type Props = {
     params: { slug: string };
 };
-  
+
 
 let cachedProperty: any = null;
 let cachedPropertySlug: any = null;
@@ -19,9 +20,10 @@ async function fetchPropertyData(slug: string) {
 
     const response = await findProperties({ slug }, 1);
     if (response.success && response.data.length) {
-        cachedPropertySlug = slug
-        cachedProperty = response.data[0];
-        return cachedProperty;
+        let propertyData = response.data[0];
+        // cachedPropertySlug = slug
+        // cachedProperty = propertyData
+        return propertyData;
     }
     else {
         return null;
@@ -36,7 +38,7 @@ function shortenString(str: string, size: number) {
     return str;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }>}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const property = await fetchPropertyData(slug); // Fetch property details
     console.log("property", property)
@@ -71,19 +73,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: 'website',
             siteName: 'Land Treat',
             images: [
-              {
-                url: property.propertyDetails.coverImage,
-                width: 1200,
-                height: 630,
-                alt: property.propertyDetails.propertyTitle,
-              }
+                {
+                    url: property.propertyDetails.coverImage,
+                    width: 1200,
+                    height: 630,
+                    alt: property.propertyDetails.propertyTitle,
+                }
             ],
-          },
-          themeColor: '#2f69e6',
+        },
+        themeColor: '#2f69e6',
     };
 }
 
-async function page({ params }: { params: Promise<{ slug: string }>}) {
+async function page({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
 
@@ -177,6 +179,7 @@ async function page({ params }: { params: Promise<{ slug: string }>}) {
 
             </div>
 
+            <PropertyActionButton propertyId={property.propertyId}/>
         </>
     );
 }

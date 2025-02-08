@@ -25,7 +25,7 @@
 <ng-container *ngIf="showUserProfileModal">
     <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex justify-between items-end mb-4">
                 <!-- <h2 class="text-xl">{{currentUser.firstName}} {{currentUser.lastName}}</h2> -->
                 <button class="text-gray-500 hover:text-gray-700" (click)="false" aria-label="Close Modal"
                     (click)="showUserProfileModal = false">
@@ -38,6 +38,7 @@
                 
                 <!-- User Info -->
                 <h2 class="text-xl">{{currentUser.firstName}} {{currentUser.lastName}}</h2>
+                <p className="text-gray-700 text-sm">{{currentUser.role || ''}}</p>
                 <p class="text-gray-500 text-sm">{{currentUser.email}}</p>
     
                 <!-- Logout Button -->

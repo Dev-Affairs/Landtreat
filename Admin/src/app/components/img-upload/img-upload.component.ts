@@ -8,12 +8,13 @@ import Swal from 'sweetalert2';
 import { combineLatest } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-img-upload',
   templateUrl: './img-upload.component.html',
   styleUrl: './img-upload.component.scss',
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, FontAwesomeModule]
 
 })
 export class ImgUploadComponent implements OnInit, AfterViewInit {

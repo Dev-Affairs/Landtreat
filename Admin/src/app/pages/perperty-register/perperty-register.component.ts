@@ -12,6 +12,8 @@ import { filter } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { faFileCirclePlus, faL, faPlus, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-perperty-register',
@@ -31,7 +33,9 @@ export class PerpertyRegisterComponent implements AfterViewInit,OnInit {
     public registrationService: PropertyRegistrationService,
     public authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private cdRef: ChangeDetectorRef,
+    public configService: ConfigService
   ){
   }
   files: File[] = [];
@@ -99,15 +103,17 @@ fileAddIcon:any = faFileCirclePlus
         this.commonService.startBlockUI("Loading..")
         this.commonService.findProperties({"propertyId": this.propertyId}, 1).subscribe((response: any)=>{
 
-          if (response.data[0].formConfig) {
-            this.formControl = response.data[0].formConfig
-          }
-
+          
           this.commonService.stopBlockUI()
           if(response.success && response.data.length){
             this.propertyData = response.data[0]
             this.formDataModel = response.data[0].propertyDetails
-
+            
+            if (response.data[0].formConfig) {
+              this.formControl = response.data[0].formConfig
+            }
+            console.log("propertyData--", this.propertyData)
+            console.log("formDataModel--", this.formDataModel)
 
             
             this.initialImgData.propertyImageData = {
@@ -116,6 +122,7 @@ fileAddIcon:any = faFileCirclePlus
             }
 
             this.additionalFields = this.formDataModel.additionalFields
+            this.cdRef.detectChanges(); // Force update
             this.loadInitialEditorForm()
           }
           else{
@@ -129,6 +136,13 @@ fileAddIcon:any = faFileCirclePlus
       });
     }
 
+  }
+
+
+  assignObjectData(mainObject: any, copyObject: any){
+    Object.keys(mainObject).forEach((key: any)=>{
+      copyObject[key] = mainObject[key]
+    })
   }
 
   addTagFieldValue: string = ""
@@ -928,13 +942,14 @@ this.formDataModel['possessionDate'] = formattedDate
           showConfirmButton: true
         }).then(()=>{
           if(res.success){
-            if(res.data.propertyId){
-              this.router.navigate(['/property'], { queryParams: {
-                "propertyid" : res.data.propertyId
-              }});
+            if(res.data.slug){
+              window.open(`${this.configService.get("Main_Site_Url")}/property/${res.data.slug}` , "_self")
+              // this.router.navigate(['/property'], { queryParams: {
+              //   "propertyid" : res.data.propertyId
+              // }});
             }
             else{
-              this.router.navigate(['/']);
+              window.open(`${this.configService.get("Main_Site_Url")}` , "_self")
             }
           }
           else{
@@ -1008,13 +1023,15 @@ let patchFormConfig
           title: "Property Updated Succesfully",
           showConfirmButton: true
         }).then(()=>{
-          if(this.propertyId){
-            this.router.navigate(['/property'], { queryParams: {
-              "propertyid" : this.propertyId
-            }});
+          if(this.propertyData.slug){
+            window.open(`${this.configService.get("Main_Site_Url")}/property/${this.propertyData.slug}` , "_self")
+            // this.router.navigate(['/property'], { queryParams: {
+            //   "propertyid" : this.propertyId
+            // }});
           }
           else{
-            this.router.navigate(['/']);
+            window.open(`${this.configService.get("Main_Site_Url")}` , "_self")
+            // this.router.navigate(['/']);
           }
         });
       }
