@@ -133,7 +133,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy {
   }
 
   onPostTitleChange(event: any){
-    let title = this.formDataModel.title 
+    let title = this.formDataModel.postDetails.title 
     this.formDataModel.slug = this.postService.getSlug(title)
   }
 
@@ -151,6 +151,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy {
   onPublishPost(){
     console.log("onPublishPost", this.formDataModel)
         this.commonService.startBlockUI("Starting ...")
+        console.log("''this.formDataModel.postDetails.content---", this.formDataModel.postDetails.content)
         let formattedContent: any = this.formatHtmlContent(this.formDataModel.postDetails.content);
         // console.log("formattedContent--", formattedContent.changingThisBreaksApplicationSecurity)
         this.formDataModel.postDetails["content"] = formattedContent
@@ -162,6 +163,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy {
         this.formDataModel["publisherEmailId"] = this.currentUser.email
         this.formDataModel["categories"] = this.currentUser.email
         this.formDataModel["isPublished"] = true
+        this.formDataModel["isTrash"] = false
         this.commonService.addPost(this.formDataModel, this.currentUser.id).subscribe((res: any)=>{
           this.commonService.stopBlockUI()
           console.log("res from publish --", res)
