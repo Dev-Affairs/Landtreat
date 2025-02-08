@@ -119,7 +119,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 
                         <div className="w-full lg:w-1/2 space-y-4">
                             <h2 className="text-2xl font-semibold text-gray-800">{propertyDetails.propertyTitle}</h2>
-                            <div className="text-2xl font-bold text-gray-800">{propertyDetails.properyPriceInText}</div>
+                            <div className="text-2xl font-bold text-gray-800">₹ {propertyDetails.properyPriceInText}</div>
                             <div className="text-gray-700 text-sm">₹ {propertyDetails.landPricePerSqrft} per sqft</div>
 
                             <div className="bg-gray-100 p-4 rounded-lg  border-[1px] border-[#e1e1e1]">

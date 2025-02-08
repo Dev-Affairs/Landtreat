@@ -54,7 +54,7 @@ function PropertyCard({ propertyData }: any) {
             </div>
             <div className="px-6 py-3 flex flex-col justify-center items-start gap-2 w-full cursor-pointer" onClick={() => router.push(`/property/${propertyData.slug || 'NotFound'}`)}>
                 <h1 className="text-xl text-black font-semibold font-roboto line-clamp-2 overflow-hidden">{propertyDetails.propertyTitle}</h1>
-                <h1 className="text-2xl text-red-600 font-bold">{propertyDetails.properyPriceInText}</h1>
+                <h1 className="text-2xl text-red-600 font-bold">₹ {propertyDetails.properyPriceInText}</h1>
                 <p className="text-black font-roboto line-clamp-3 overflow-hidden">{propertyDetails.propertyDescription}</p>
                 <div id="icons" className="flex justify-center items-start gap-4">
                     {/* <div className="flex justify-center items-center gap-2"><svg stroke="currentColor" fill="currentColor"
