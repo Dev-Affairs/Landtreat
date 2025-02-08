@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body { height: 100%;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;background:#FAFAFA !important; }
+*{
+    margin: 0;
+    padding: 0;
+}
+/* Importing Bootstrap SCSS file. */
+
+:host {
+  --initial_page_padding: 20px 0;
+}
+
+/* Remove border from the editor */
+.ql-container {
+  border: none !important;
+}
+
+/* Optional: Remove border from the toolbar */
+.ql-toolbar {
+  border: none !important;
+}
+
+/* Ensure no padding or margins */
+.ql-container,
+.ql-toolbar {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Remove border from the editor */
+.ql-container {
+  border: none !important;
+}
+
+
+/* Ensure no padding or margins */
+.ql-container{
+  margin: 0;
+  padding: 0;
+}
+.ql-toolbar{
+  border: none !important;
+  margin: 0 !important;
+  z-index: 9 !important;
+  @apply h-[120px] lg:h-[50px] w-full absolute left-0 top-0 bg-[#E0E0F4] m-0
+}
+

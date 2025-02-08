@@ -44,3 +44,46 @@ Client/next-env.d.ts
 # Server
 Server/node_modules
 Server/config/*
+
+
+# Admin
+# Compiled output
+Admin/dist
+Admin/tmp
+Admin/out-tsc
+Admin/bazel-out
+
+# Node
+Admin/node_modules
+Admin/npm-debug.log
+Admin/yarn-error.log
+
+# IDEs and editors
+Admin/.idea/
+Admin/.project
+Admin/.classpath
+Admin/.c9/
+Admin/*.launch
+Admin/.settings/
+Admin/*.sublime-workspace
+
+# Visual Studio Code
+Admin/.vscode/*
+Admin/!.vscode/settings.json
+Admin/!.vscode/tasks.json
+Admin/!.vscode/launch.json
+Admin/!.vscode/extensions.json
+Admin/.history/*
+
+# Miscellaneous
+Admin/.angular/cache
+Admin/.sass-cache/
+Admin/connect.lock
+Admin/coverage
+Admin/libpeerconnection.log
+Admintestem.log
+Admin/typings
+
+# System files
+Admin/.DS_Store
+Admin/Thumbs.db

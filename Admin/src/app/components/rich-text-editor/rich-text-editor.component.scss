@@ -1,0 +1,20 @@
+/* Remove border from the editor */
+.ql-container {
+    border: none !important;
+  }
+  
+  
+  /* Ensure no padding or margins */
+  .ql-container{
+    margin: 0;
+    padding: 0;
+  }
+  .ql-toolbar .ql-snow{
+    border: none !important;
+    margin: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9 !important;
+    background: rgb(252, 0, 0) !important;
+  }
+  

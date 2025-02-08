@@ -1,0 +1,38 @@
+<input type="file" #fileInput  name="files[]" (change)="onChangeFileinput($event)" accept="image/*" hidden >
+
+<div class="image-container">
+    <div class="image-viewer-window" id="add-img-window" [ngStyle]="{'height': coverImgHeight, 'width': mainWindowWidth}" >
+      <ng-container *ngIf="selectedFileUrl">
+        <button class="window-image-action" (click)="onSetAsCoverClick(selectedFileUrl)"  [ngClass]="selectedFileUrl== localCoverImage ? 'active-cover-img-label' : 'inactive-cover-img-label'">
+          {{selectedFileUrl == localCoverImage ? "cover picture" : "set as cover"}}
+        </button>
+        <span (click)="onClickOpenFile(selectedFileUrl)">
+          <img [src]="selectedFileUrl" alt="Land-Treat-Property" class="viewer-main-image">
+        </span>
+      </ng-container>
+      <ng-container  *ngIf="!selectedFileUrl">
+        <div class="add-image-window-btn" (click)="!isCurrentUpoadInprogress ? onClickAddImg() : false">
+          <i class="fa-solid fa-plus" *ngIf="!isCurrentUpoadInprogress"></i>
+          <div class="spinner" *ngIf="isCurrentUpoadInprogress"></div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="image-selection-section" [ngClass]="{'hide-image-selection-section': filePreviews.length == 0}">
+      <div class="add-img">
+        <button (click)="onClickAddImg()"><i class="fa-solid fa-plus"></i></button>
+        <button class="add-image-action-btn" (click)="hideImagePriviewSection=!hideImagePriviewSection"><i class="fa" [ngClass]="hideImagePriviewSection ? 'fa-chevron-up' : 'fa-chevron-down'"></i></button>
+      </div>
+      <div class="selected-images-section" #horizontalScroll [ngClass]="hideImagePriviewSection ? 'hide-preview' : 'show-preview'"  >
+        <div class="img-preview-section">
+          <div *ngFor="let file of filePreviews; let i = index" #imgPreviewEle (mouseenter)="hoverImgPreview(imgPreviewEle)" (mouseleave)="leaveImgPreview(imgPreviewEle)" class="img-preview">
+           
+            <button #button mat-mini-fab (click)="onDeleteImg(file)"  (mouseleave)="test2()" *ngIf="file.isUploadCompleted">
+               <!-- <fa-icon [icon]="deleteIcon" class="deleteIcon"></fa-icon>
+               <fa-icon [icon]="crossIcon" class="crossIcon"></fa-icon> -->
+             </button>
+            <img [src]="file.content || file.fileUrl" alt="{{ file.name }}" (click)="onClickPriviewImg(i, file)" [ngClass]="file.isUploadCompleted ? 'uploaded-image': 'upload-inprogress-image'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

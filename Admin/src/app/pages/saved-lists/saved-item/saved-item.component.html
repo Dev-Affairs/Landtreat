@@ -1,0 +1,38 @@
+<div class="container mx-auto p-4 h-[90vh]">
+    <div class="my-4 mx-2 flex justify-end">
+        <a type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:outline-none dark:bg-green-600 dark:hover:bg-green-700 uppercase" [routerLink]="'/savedItem'" (click)="onSaveItemForm()" *ngIf="!isEditMode">
+            Submit
+        </a>
+        <a type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:outline-none dark:bg-green-600 dark:hover:bg-green-700 uppercase" [routerLink]="'/savedItem'" (click)="onUpdateSavedForm()" *ngIf="isEditMode">
+            Update
+        </a>
+    </div>
+    
+    <!-- Form Starts Here -->
+    <div class="overflow-x-auto rounded-lg border shadow-sm p-6 bg-white">
+        <h2 class="text-lg font-semibold mb-4">{{formHeaderText}}</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Student Name -->
+             <ng-container *ngFor="let item of formConfig">
+                <div *ngIf="item.type == 'textfield'">
+                    <label class="block text-sm font-medium text-gray-700">{{item.text}}</label>
+                    <input type="text" placeholder="Enter {{item.text}}" class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="dataModel[item.name]">
+                </div>
+                <div *ngIf="item.type == 'dropdown'">
+                    <label class="block text-sm font-medium text-gray-700">Gender</label>
+                    <select class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" disabled selected>Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="col-span-1 md:col-span-2" *ngIf="item.type == 'textarea'">
+                    <label class="block text-sm font-medium text-gray-700">{{item.text}}</label>
+                    <textarea rows="3" placeholder="Enter {{item.text}}" class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"[(ngModel)]="dataModel[item.name]"></textarea>
+                </div>
+             </ng-container>
+            </div>
+    </div>
+</div>

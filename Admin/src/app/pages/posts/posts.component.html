@@ -1,0 +1,55 @@
+<div class="container mx-auto p-4 h-[90vh]">
+    <!-- Blog Section -->
+     <div>
+        
+     </div>
+    <div class="flex flex-wrap">
+      <!-- Left Content -->
+      <div class="w-full lg:w-3/4">
+        <!-- Blog Card 1 -->
+         <div class="my-4 flex justify-end">
+          <a 
+        class="px-3 py-2 text-xs font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:outline-none dark:bg-green-600 dark:hover:bg-green-700 uppercase"
+        routerLink="/addPost">
+        Add New Post
+         </a>
+         </div>
+         <ng-container  *ngIf="posts.length">
+           <div class="flex flex-col lg:flex-row mb-6 border rounded-lg shadow-lg overflow-hidden relative" *ngFor="let post of posts">
+             <img src="{{post.postDetails.featuredImage}}" alt="Blog Image" class="w-full lg:w-1/3 h-full object-cover m-auto rounded-lg lg:rounded-l-lg cursor-pointer">
+             <div class="p-4 flex flex-col justify-between">
+               <div>
+                 <p class="text-blue-600 text-sm font-medium cursor-pointer">Augmented reality</p>
+                 <h2 class="text-xl font-bold mt-2 cursor-pointer">{{post.postDetails.title}}</h2>
+                 <p class="text-gray-600 mt-2 cursor-pointer">{{post.postDetails.description}}</p>
+               </div>
+               <div class="flex justify-between items-center mt-4">
+                   <p class="text-gray-500 text-sm mt-4">{{post.publishedOn | date:'medium' }}</p>
+                   <p class="text-gray-500 text-sm mt-4">{{post.publishedBy}}</p>
+               </div>
+             </div>
+             <div class="flex absolute top-0 right-0">
+                <button class="text-indigo-600 hover:text-indigo-900" (click)="onEditPost(post)">Edit</button>
+                <button class="text-red-600 hover:text-red-900 ml-2" (click)="onDeletePostClick(post)">Delete</button>
+             </div>
+           </div>
+         </ng-container>
+         <ng-container *ngIf="!posts.length">
+          <div class="h-[50vh] w-full flex items-center justify-center">
+            No Posts Available
+          </div>
+         </ng-container>
+      </div>
+  
+      <!-- Sidebar -->
+      <div class="w-full lg:w-1/4 lg:pl-6 mt-6 lg:mt-0">
+        <div class="border rounded-lg shadow-lg p-4">
+          <h4 class="text-lg font-bold mb-2">Popular Category</h4>
+          <ul>
+            <li><a href="#" class="flex justify-between text-gray-700 hover:text-blue-500">Real Estate <span>(0)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  

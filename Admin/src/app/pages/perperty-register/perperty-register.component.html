@@ -1,0 +1,233 @@
+<!-- <app-common-navbar [showSearchBar]="false"></app-common-navbar> -->
+<!-- <input type="file" id="image-input" name="files[]" (change)="onChangeFileinput($event)" accept="image/*" hidden> -->
+<!-- <input type="file" id="plan-input" name="plan-files[]" (change)="onChangePlanFileinput($event)" accept="image/*" hidden> -->
+<div class="page-container h-[90vh]">
+  <div class="registration-form-main">
+    <div class="vertical-sections first-vertical-section">
+
+        <!-- <div class="image-container">
+          <div class="image-viewer-window" id="add-img-window">
+            <ng-container *ngIf="seletedFileUrl">
+              <button class="window-image-action" (click)="onSetAsCoverClick(seletedFileUrl)"  [ngClass]="seletedFileUrl==coverImage ? 'active-cover-img-label' : 'inactive-cover-img-label'">
+                {{seletedFileUrl==coverImage ? "cover picture" : "set as cover"}}
+              </button>
+              <span (click)="onClickOpenFile(seletedFileUrl)">
+                <img [src]="seletedFileUrl" alt="Land-Treat-Property" class="viewer-main-image">
+              </span>
+            </ng-container>
+            <ng-container  *ngIf="!seletedFileUrl">
+              <div class="add-image-window-btn" (click)="!isCurrentUpoadInprogress ? onClickAddImg() : false">
+                <i class="fa-solid fa-plus" *ngIf="!isCurrentUpoadInprogress"></i>
+                <div class="spinner" *ngIf="isCurrentUpoadInprogress"></div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="image-selection-section" [ngClass]="{'hide-image-selection-section': filePreviews.length == 0}">
+            <div class="add-img">
+              <button (click)="onClickAddImg()"><i class="fa-solid fa-plus"></i></button>
+              <button class="add-image-action-btn" (click)="hideImagePriviewSection=!hideImagePriviewSection"><i class="fa" [ngClass]="hideImagePriviewSection ? 'fa-chevron-up' : 'fa-chevron-down'"></i></button>
+            </div>
+            <div class="selected-images-section" #horizontalScroll [ngClass]="hideImagePriviewSection ? 'hide-preview' : 'show-preview'">
+              <div class="img-preview-section">
+                <div *ngFor="let file of filePreviews; let i = index" class="img-preview">
+                   <button (click)="onDeleteImg(file)">
+                    <fa-icon [icon]="deleteIcon"></fa-icon>
+                   </button>
+                  <img [src]="file.content || file.fileUrl" alt="{{ file.name }}" (click)="onClickPriviewImg(i, file)" [ngClass]="file.isUploadCompleted ? 'uploaded-image': 'upload-inprogress-image'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="test">
+          <app-img-upload (imgDataOutput)="receiveImgData($event,'propertyImgUpload')" [initialImgData]="initialImgData.propertyImageData" [imgUploadWindowHeight]="imgUploadWindowHeight"></app-img-upload>
+        </div>
+
+
+        <div class="property-tags-container">
+          <div class="tags-info">
+            <div class="input-item">
+              <label>Permalink
+              </label>
+              <div class="input-item-field">
+                <input class="text-input" [(ngModel)]="formDataModel['slug']"
+                />
+                <button>
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class="input-item">
+              <label>Add Tags
+              </label>
+              <div class="input-item-field">
+                <input class="text-input" [(ngModel)]="addTagFieldValue"
+                />
+                <button (click)="onAddTag()" [disabled]="!addTagFieldValue">
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class="tags-list">
+              <div class="tag-name"  *ngFor="let tag of formDataModel['postTags'] || []; let i = index">{{tag}}<i class="fa fa-times" aria-hidden="true" (click)="onClickRemoveTag(i)"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="vertical-sections second-vertical-section">
+      <div>
+        <div class="registration-form" id="registration-form-section">
+          <ng-container *ngFor="let section of registrationForm">
+            <div class="form-section-header">
+              <span>{{section.label}}</span>
+            </div>
+            <ng-container *ngFor="let field of section.fields">
+              <div class="input-container" *ngIf="field.type == 'dropdown'" [hidden]="formControl.hidden[field.name]">
+                <div class="input-item">
+                  <label for="{{field.name}}" class="input-label">{{field.label}}
+                    <span *ngIf="formControl.mandatory[field.name]"><i class="fa fa-asterisk" aria-hidden="true"></i></span>
+                  </label>
+                  <div class="input-item-field">
+                    <select name="{{field.name}}" aria-invalid="false"
+                    placeholder="Please select something"
+                    class="dropdown-input"
+                    [(ngModel)]="formDataModel[field.name]"
+                    [disabled]="formControl.disabled[field.name]"
+                    (change)="field.event && field.event.change ? handleFormEvent(field, 'change') : false;
+                    field.relationsWith && field.relationsWith.length ? onRelationalValueSelected(field, formDataModel[field.name]) : false"
+                    >
+                      <option value="" disabled selected>Select your option</option>
+                      <option value="{{option}}" *ngFor="let option of dropdownValuesObject[field.name] || []">{{option}}</option>
+                    </select>
+                    <button (click)="onCickRemoveSelectedValue(field)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="input-mandatory-warning" *ngIf="formControl.mandatory[field.name] && !formDataModel[field.name] && showMandatoryLabel">{{mandatoryLabelText}}</div>
+              </div>
+              <div class="input-container" *ngIf="field.type == 'textfield'" [hidden]="formControl.hidden[field.name]">
+                <div class="input-item">
+                  <label for="{{field.label}}" class="input-label">{{field.label}}
+                    <span *ngIf="formControl.mandatory[field.name]"><i class="fa fa-asterisk" aria-hidden="true"></i></span>
+                  </label>
+                  <div class="input-item-field">
+                    <input class="text-input" [(ngModel)]="formDataModel[field.name]"
+                    (change)="field.event && field.event.change ? handleFormEvent(field, 'change') : false"
+                    (keyup)="field.event && field.event.keyup ? handleFormEvent(field, 'keyup') : false"
+                    (blur)="field.event && field.event.blur ? handleFormEvent(field, 'blur') : false"
+                    (focus)="field.event && field.event.focus ? handleFormEvent(field, 'focus') : false"
+                    [disabled]="formControl.disabled[field.name]" [placeholder]="field.placeholder || ''"
+                    />
+                  </div>
+                </div>
+                <div class="input-mandatory-warning" *ngIf="formControl.mandatory[field.name] && !formDataModel[field.name] && showMandatoryLabel">{{mandatoryLabelText}}</div>
+              </div>
+
+              <div class="input-container" *ngIf="field.type == 'textarea'" [hidden]="formControl.hidden[field.name]">
+                <div class="input-item">
+                  <label for="{{field.label}}" class="input-label">{{field.label}}
+                    <span *ngIf="formControl.mandatory[field.name]"><i class="fa fa-asterisk" aria-hidden="true"></i></span>
+                  </label>
+                  <textarea class="text-area" name="{{field.label}}" [(ngModel)]="formDataModel[field.name]" [disabled]="formControl.disabled[field.name]">
+                  </textarea>
+                </div>
+                <div class="input-item-field">
+                  <div class="input-mandatory-warning" *ngIf="formControl.mandatory[field.name] && !formDataModel[field.name] && showMandatoryLabel">{{mandatoryLabelText}}</div>
+                </div>
+              </div>
+
+              <!-- <div class="input-container" style=" width: 80%;margin: auto;" *ngIf="field.type === 'datepicker'" [hidden]="formControl.hidden[field.name]">
+                
+                <label for="{{field.label}}" class="input-label" style="font-size: 1.3vw;">{{field.label}}
+                  <span *ngIf="formControl.mandatory[field.name]"><i class="fa fa-asterisk" aria-hidden="true"></i></span>
+                </label>
+
+                <mat-card style="width: 100%;margin-top: 2vw;">
+                  <mat-calendar (selectedChange)="onDateChange($event)" [(selected)]="selectedDate"></mat-calendar>
+                </mat-card>
+              
+                
+
+                <div class="input-item-field">
+                  <div class="input-mandatory-warning" *ngIf="formControl.mandatory[field.name] && !formDataModel[field.name] && showMandatoryLabel">{{mandatoryLabelText}}</div>
+                </div>
+              </div> -->
+
+         
+              <div class="config-container" *ngIf="field.type === 'projectConfig' " [hidden]="formControl.hidden[field.name]">
+                <div class="config-header">
+                  <span>
+                    Configurations
+                  </span>
+                </div>
+                <div class="config-body">
+                  <div class="configurations-multiselect-container">
+                    <span>Please select your configurations.</span>
+                    <div class="multiselect">
+                      <i class="fa fa-asterisk" aria-hidden="true"></i>
+                      <label [for]="item.id" class="item" *ngFor="let item of configurationsMultiselectData">
+                          <input type="checkbox" class="custom-checkbox" (change)="onChangeConfigurationSelection()" [(ngModel)]="item.selected" [id]="item.id" [value]="item.value" (click)="$event.stopPropagation()">
+                          <span>
+                            {{item.value}}
+                          </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="plan-upload-container">
+                    <span>
+                      Upload your plan
+                    </span>
+
+                    <app-img-upload  [initialImgData]="initialImgData.planImageData"  (imgDataOutput)="receiveImgData($event,'planImgUpload')" [imgUploadWindowHeight]="imgUploadWindowHeightCopy"></app-img-upload>
+                  </div>
+
+                </div>
+               
+              </div>
+
+
+            </ng-container>
+          </ng-container>
+          <ng-container >
+            <div class="additional-fields-container" *ngIf="additionalFields.length">
+              <div class="additional-fields">
+                <div class="additional-fields-header">
+                  <span>Additional Fields</span>
+                </div>
+                <div class="additional-fields-item"  *ngFor="let field of additionalFields; let i = index">
+                  <label class="input-label">{{additionalFields[i].label}}</label>
+                  <div class="input-item-field">
+                    <input class="text-input" [(ngModel)]="additionalFields[i].value" [placeholder]="'Please Enter '+ additionalFields[i].label"/>
+                    <button (click)="removeAdditionalField(i)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div>
+            </div> -->
+            <div class="add-additional-field" [ngClass]="{'show-add-field': showAddAdditionalFieldInput}">
+              <button (click)="showAddAdditionalFieldInput=!showAddAdditionalFieldInput" class="add-button">{{showAddAdditionalFieldInput ? 'Cancel': 'Add New Field'}}</button>
+              <!-- <span>Enter Field name :</span> -->
+               <div class="add-additional-field-action">
+                 <input type="text" [(ngModel)]="addAdditionalFieldName" placeholder="Enter Field Name">
+                 <button (click)="addAdditionalField()" [disabled]="addAdditionalFieldName.trim().length < 1" class="add-field-submit">Save</button>
+               </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="action-btns-group">
+          <button class="registration-action-btns btn-red" *ngIf="mode=='edit'" (click)="onClickDiscard()">Discard</button>
+          <button class="registration-action-btns btn-red" *ngIf="mode=='add'" (click)="onClickCancel()">Cancel</button>
+          <button class="registration-action-btns btn-green" (click)="onTryPublish()" *ngIf="mode=='add'">Publish</button>
+          <button class="registration-action-btns btn-green" (click)="onTryUpdate()" *ngIf="mode=='edit'">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-footer></app-footer> -->
