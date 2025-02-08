@@ -80,8 +80,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                     alt: property.propertyDetails.propertyTitle,
                 }
             ],
-        },
-        themeColor: '#2f69e6',
+        }
     };
 }
 

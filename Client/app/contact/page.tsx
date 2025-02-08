@@ -28,8 +28,7 @@ export async function generateMetadata({ }): Promise<Metadata> {
           height: 630
         }
       ],
-    },
-    themeColor: '#2f69e6',
+    }
   };
 }
 
