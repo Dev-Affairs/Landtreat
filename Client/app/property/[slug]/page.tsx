@@ -177,8 +177,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
                 </div>
 
             </div>
-
-            <PropertyActionButton propertyId={property.propertyId}/>
+            <PropertyActionButton property={property}/>
         </>
     );
 }
