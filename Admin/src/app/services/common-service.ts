@@ -228,7 +228,7 @@ this.userProfileMenuState2.next(value)
     })
   }
 
-  updatePost(postId: string, formData: any){
+  updatePost(slug: string, postId: string, formData: any){
     let updateData = {
       "$set": {
         "postDetails": formData
@@ -237,6 +237,7 @@ this.userProfileMenuState2.next(value)
 
     return this.http.post(this.configService.get("API_BASE_URL") + 'api/update-post', {
       "postId": postId,
+      "slug": slug,
       updateData
     }, {
       headers: new HttpHeaders({

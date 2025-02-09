@@ -13,13 +13,12 @@ const serverConfig = require('../config/serverConfig.json')
 
 updateSitemap = async(postUrl) => {
     try {
-    const sitemapPath = path.join(serverConfig.sitemap.siteMapPath, serverConfig.sitemap.fileName);
+    const sitemapPath = path.join(serverConfig.sitemap.property.siteMapPath, serverConfig.sitemap.property.fileName);
       const xmlData = fs.readFileSync(sitemapPath, 'utf-8');
       const parser = new xml2js.Parser();
       const sitemapData = await parser.parseStringPromise(xmlData);
-      const sitemapEntries = sitemapData.sitemapindex.sitemap;
+      const sitemapEntries = sitemapData.sitemapindex.sitemap || [];
       const sitemapEntry = sitemapEntries.find(entry => entry.loc[0] === postUrl);
-  
       if (sitemapEntry) {
         sitemapEntry.lastmod[0] = new Date().toISOString();
         console.log(`Updated <lastmod> for: ${postUrl}`);
@@ -33,6 +32,7 @@ updateSitemap = async(postUrl) => {
         console.log(`Added new sitemap entry for: ${postUrl}`);
       }
       const builder = new xml2js.Builder();
+      sitemapData.sitemapindex.sitemap = sitemapEntries
       const updatedXml = builder.buildObject(sitemapData);
       fs.writeFileSync(sitemapPath, updatedXml, 'utf-8');
       console.log('Sitemap updated successfully!');

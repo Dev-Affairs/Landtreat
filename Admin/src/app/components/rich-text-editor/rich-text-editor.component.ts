@@ -207,7 +207,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy {
     let formattedContent: any = this.formatHtmlContent(this.formDataModel.postDetails.content);
     // console.log("formattedContent--", formattedContent.changingThisBreaksApplicationSecurity)
     this.formDataModel.postDetails["content"] = formattedContent
-    this.commonService.updatePost(this.postId,  this.formDataModel.postDetails).subscribe((res: any)=>{
+    this.commonService.updatePost(this.formDataModel.slug, this.postId,  this.formDataModel.postDetails).subscribe((res: any)=>{
       this.commonService.stopBlockUI()
       console.log("res from publish --", res)
       if(res.success){
