@@ -14,7 +14,7 @@ const handle = app.getRequestHandler();
 // Paths to the admin and blog build folders
 const adminFolder = path.join(__dirname, 'client', 'app'); // Angular Admin App
 const blogFolder = path.join(__dirname, 'client', 'blog');   // Blog SPA
-const siteMapFolder = path.join(__dirname, 'client', 'sitemap');   // Blog SPA
+const siteMapFolder = path.join(__dirname, '../', 'sitemap');   // Blog SPA
 
 app.prepare().then(() => {
     createServer((req, res) => {

@@ -11,6 +11,7 @@ const serverConfig = require('../config/serverConfig.json')
 updateSitemap = async(postUrl) => {
   try {
   const sitemapPath = path.join(serverConfig.sitemap.post.siteMapPath, serverConfig.sitemap.post.fileName);
+  console.log("sitemapPath =>>", sitemapPath)
     const xmlData = fs.readFileSync(sitemapPath, 'utf-8');
     const parser = new xml2js.Parser();
     const sitemapData = await parser.parseStringPromise(xmlData);
