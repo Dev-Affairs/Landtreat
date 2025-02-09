@@ -7,40 +7,9 @@ const PropertyWatchlist = require('../models/PropertyWatchlist');
 const FeatureProperties = require('../models/FeatureProperties')
 const adminConfig = require('../config/adminConfig.json')
 const serverConfig = require('../config/serverConfig.json')
+const {sendEmail} = require('../services/mail-service')
+const {updateSitemap} = require('../services/sitemap')
 
-
-// const sitemapPath = path.join("G:/Projects/Landtreat/Server", "file.xml");
-
-updateSitemap = async(postUrl) => {
-    try {
-    const sitemapPath = path.join(serverConfig.sitemap.property.siteMapPath, serverConfig.sitemap.property.fileName);
-    console.log("sitemapPath =>>", sitemapPath)
-      const xmlData = fs.readFileSync(sitemapPath, 'utf-8');
-      const parser = new xml2js.Parser();
-      const sitemapData = await parser.parseStringPromise(xmlData);
-      const sitemapEntries = sitemapData.sitemapindex.sitemap || [];
-      const sitemapEntry = sitemapEntries.find(entry => entry.loc[0] === postUrl);
-      if (sitemapEntry) {
-        sitemapEntry.lastmod[0] = new Date().toISOString();
-        console.log(`Updated <lastmod> for: ${postUrl}`);
-      } else {
-        console.log(`URL not found in the sitemap: ${postUrl}`);
-        const newSitemap = {
-          loc: [postUrl],
-          lastmod: [new Date().toISOString()]
-        };
-        sitemapEntries.push(newSitemap);
-        console.log(`Added new sitemap entry for: ${postUrl}`);
-      }
-      const builder = new xml2js.Builder();
-      sitemapData.sitemapindex.sitemap = sitemapEntries
-      const updatedXml = builder.buildObject(sitemapData);
-      fs.writeFileSync(sitemapPath, updatedXml, 'utf-8');
-      console.log('Sitemap updated successfully!');
-    } catch (err) {
-      console.error('Error updating sitemap:', err);
-    }
-  }
 
 module.exports.addNewProperty = async (req, res) => {
     console.log("addNewProperty--", req.body)
@@ -97,7 +66,7 @@ module.exports.addNewProperty = async (req, res) => {
           res.send({ success: false, message: 'Something went wrong'});
         }
         await newProperty.save();
-        updateSitemap(`${serverConfig.appUrl}/property/${formData.propertyDetails.slug}`)
+        updateSitemap(`${serverConfig.appUrl}/property/${formData.propertyDetails.slug}`, 'property')
         res.send({ success: true, message: 'Property Added successfully', data: newProperty });
       } catch (error) {
         res.status(500).send({ success: false, message: error.message });
@@ -267,7 +236,7 @@ module.exports.updateProperty = async (req, res) => {
       updateData,
       { new: true } // This option returns the updated document
       );
-      updateSitemap(`${serverConfig.appUrl}/property/${slug}`)
+      updateSitemap(`${serverConfig.appUrl}/property/${slug}`, 'property')
       if (patchFormConfig != null) {
         const currentProperty = await Property.findOne({propertyId})
         currentProperty['formConfig'] = patchFormConfig
