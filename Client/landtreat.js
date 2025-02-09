@@ -14,6 +14,7 @@ const handle = app.getRequestHandler();
 // Paths to the admin and blog build folders
 const adminFolder = path.join(__dirname, 'client', 'app'); // Angular Admin App
 const blogFolder = path.join(__dirname, 'client', 'blog');   // Blog SPA
+const siteMapFolder = path.join(__dirname, 'client', 'sitemap');   // Blog SPA
 
 app.prepare().then(() => {
     createServer((req, res) => {
@@ -35,6 +36,10 @@ app.prepare().then(() => {
         else if (pathname.startsWith('/blog')) {
             const filePath = path.join(blogFolder, pathname.replace('/blog', '') || 'index.html');
             serveSPA(filePath, res, blogFolder);
+        }
+        else if (pathname.startsWith('/sitemap')) {
+            const filePath = path.join(siteMapFolder, pathname.replace('/sitemap', ''));
+            serveSPA(filePath, res, siteMapFolder);
         }
         // Handle other routes with Next.js
         else {
